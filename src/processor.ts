@@ -1,9 +1,12 @@
 import { vault } from "./types/aptos/testnet/mod";
 
+import { MoveResource } from 'aptos-sdk/src/generated';
 import { CoinListClient } from "@manahippo/coin-list";
-import { BigDecimal } from "@sentio/sdk";
+import { aptos, BigDecimal } from "@sentio/sdk";
 import { conversion } from "@sentio/sdk/lib/utils";
 import { Exporter } from "@sentio/sdk/lib/core/exporter";
+import { getPriceByType } from "@sentio/sdk/lib/utils/price";
+import { APTOS_MAINNET_ID } from "@sentio/sdk/lib/utils/chain";
 
 const START_VERSION = 345784333;
 const MOD_DECIMALS = 8;
@@ -60,11 +63,19 @@ vault
         coin: event.type_arguments[0],
       });
   })
-  .onEventVaultUpdatedEvent((event, ctx) => {
+  .onEventVaultUpdatedEvent(async (event, ctx) => {
+    // use mainnet price is fine
+    let coinType = event.type_arguments[0];
+    let price = await getPriceByType(
+      APTOS_MAINNET_ID,
+      coinType,
+      new Date(Number(ctx.transaction.timestamp) / 1000)
+    );
+
     const data = {
       version: event.version,
       account: event.data_typed.vault_addr,
-      coinType: event.type_arguments[0],
+      coinType,
       collateral: event.data_typed.collateral,
       debt: event.data_typed.debt,
     };
@@ -94,6 +105,15 @@ vault
 //       });
 //   });
 
+aptos.AptosAccountProcessor.bind({address: vault.DEFAULT_OPTIONS.address, startVersion: START_VERSION })
+    .onVersionInterval((rs, ctx) => calculateTvl(rs))
+
 function scaleDown(n: bigint, decimals: number): BigDecimal {
   return conversion.toBigDecimal(n).dividedBy(10 ** decimals);
 }
+
+function calculateTvl(rs: MoveResource[]): void {
+  // aptos.TYPE_REGISTRY.filterAndDecodeResources
+  throw new Error("Function not implemented.");
+}
+
