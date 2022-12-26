@@ -1,0 +1,50 @@
+[
+  {
+    "bytecode": "0xa11ceb0b0500000005010002020214071634084a200a6a05000000010008000100010001000100010001000100011577656967687465645f706f6f6c5f6c705f636f696e115765696768746564506f6f6c546f6b656e0b64756d6d795f6669656c64067f1042043bbe9477994b8d1ac5c86a97cb72e335274aaf7ddbe0fdf5e96bf3000201020100",
+    "abi": {
+      "address": "0x67f1042043bbe9477994b8d1ac5c86a97cb72e335274aaf7ddbe0fdf5e96bf3",
+      "name": "weighted_pool_lp_coin",
+      "friends": [],
+      "exposed_functions": [],
+      "structs": [
+        {
+          "name": "WeightedPoolToken",
+          "is_native": false,
+          "abilities": [],
+          "generic_type_params": [
+            {
+              "constraints": []
+            },
+            {
+              "constraints": []
+            },
+            {
+              "constraints": []
+            },
+            {
+              "constraints": []
+            },
+            {
+              "constraints": []
+            },
+            {
+              "constraints": []
+            },
+            {
+              "constraints": []
+            },
+            {
+              "constraints": []
+            }
+          ],
+          "fields": [
+            {
+              "name": "dummy_field",
+              "type": "bool"
+            }
+          ]
+        }
+      ]
+    }
+  }
+]

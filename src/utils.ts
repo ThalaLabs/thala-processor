@@ -86,3 +86,10 @@ export function fp64ToFloat(a: bigint): number {
   }
   return result;
 }
+
+export function bigintToInteger(a: bigint): number {
+  if (a > BigInt(Number.MAX_SAFE_INTEGER)) {
+    throw new Error("too large");
+  }
+  return Number(a);
+}
